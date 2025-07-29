@@ -1,0 +1,42 @@
+<div class="wrapper">
+  <div id="formContent">
+    <a class="underlineHover" href="/signin">Sign In</a>
+    <a class="underlineHover" href="/signup">Sign Up</a>
+    <br />
+    <br />
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+      <div>
+        <input
+          type="text"
+          id="email"
+          formControlName="email"
+          placeholder="Email"
+          required
+        />
+        <div class="validation-message" *ngIf="signInForm.get('email')?.invalid && signInForm.get('email')?.touched">
+          <small *ngIf="signInForm.get('email')?.errors?.['required']">Email is required</small>
+          <small *ngIf="signInForm.get('email')?.errors?.['pattern']">Invalid email format</small>
+        </div>
+      </div>
+
+      <div>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Password"
+          required
+        />
+        <div class="validation-message" *ngIf="signInForm.get('password')?.invalid && signInForm.get('password')?.touched">
+          <small *ngIf="signInForm.get('password')?.errors?.['required']">Password is required</small>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="signInForm.invalid">Sign In</button>
+    </form>
+
+    <div class="alert" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </div>
+</div>
