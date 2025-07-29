@@ -1,35 +1,29 @@
 import { createAction, props } from '@ngrx/store';
 
+// SignUp Actions
 export const signUp = createAction(
-  '[Auth] Sign Up',
+  '[Auth] SignUp',
   props<{ signUpData: { fullName: string; email: string; password: string } }>()
 );
-
 export const signUpSuccess = createAction(
-  '[Auth] Sign Up Success',
+  '[Auth] SignUp Success',
   props<{ message: string }>()
 );
-
 export const signUpFailure = createAction(
-  '[Auth] Sign Up Failure',
+  '[Auth] SignUp Failure',
   props<{ error: string }>()
 );
 
+// SignIn Actions
 export const signIn = createAction(
-  '[Auth] Sign In',
+  '[Auth] SignIn',
   props<{ signInData: { email: string; password: string } }>()
 );
-
 export const signInSuccess = createAction(
-  '[Auth] Sign In Success',
-  props<{
-    message: string;
-    token: string;
-    user: { fullName: string; email: string };
-  }>()
+  '[Auth] SignIn Success',
+  props<{ message: string; token: string; user: { fullName: string; email: string } }>()
 );
-
 export const signInFailure = createAction(
-  '[Auth] Sign In Failure',
+  '[Auth] SignIn Failure',
   props<{ error: string }>()
 );

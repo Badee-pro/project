@@ -24,9 +24,9 @@ import { AuthService } from './store/auth.service';
   imports: [
     BrowserModule,
     HttpClientModule,
-    StoreModule.forRoot({ auth: authReducer }),
     RouterModule,
     FormsModule,
+    StoreModule.forRoot({ auth: authReducer }),
     EffectsModule.forRoot([AuthEffects]),
   ],
   providers: [

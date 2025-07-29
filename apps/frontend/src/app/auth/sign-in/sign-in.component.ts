@@ -1,48 +1,57 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { Router } from '@angular/router';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Store } from '@ngrx/store';
-import { signIn } from '../../store/auth.actions';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [CommonModule, HttpClientModule, FormsModule],
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css'],
+  styleUrl: './sign-in.component.css',
 })
-export class SignInComponent implements OnInit {
-  signInForm!: FormGroup;
+export class SignInComponent {
+  // Component properties
+  email = '';
+  password = '';
   errorMessage = '';
   emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private store: Store // ✅ FIXED: added store
-  ) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  ngOnInit() {
-    this.signInForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
-      password: ['', Validators.required],
-    });
-  }
-
+  // Method to handle form submission
   onSubmit() {
-    if (this.signInForm.invalid) {
-      this.errorMessage = 'Please fill in all fields correctly.';
+    if (!this.email || !this.password) {
+      this.errorMessage = 'Please fill in all fields.';
       return;
     }
 
-    // ✅ Dispatch the signIn action with form data
-    this.store.dispatch(signIn({ signInData: this.signInForm.value }));
-    this.errorMessage = '';
+    // Validate email format
+    const userCredentials = {
+      email: this.email.toLowerCase(),
+      password: this.password,
+    };
+
+    // Send the user credentials to the backend for authentication
+    this.http
+      .post(`${environment.apiBaseUrl}/signin`, userCredentials)
+      .subscribe(
+        (response: any) => {
+          localStorage.setItem('token', response.accessToken);
+          this.router.navigate(['/profile']);
+        },
+        // Handle error response
+        (error) => {
+          if (error.error?.message) {
+            this.errorMessage = error.error.message;
+          } else {
+            this.errorMessage = 'Authentication failed. Please try again.';
+          }
+          console.error('Sign-in failed', error);
+        }
+      );
   }
 }

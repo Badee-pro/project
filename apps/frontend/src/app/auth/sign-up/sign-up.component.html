@@ -1,67 +1,47 @@
-<div class="wrapper">
-  <div id="formContent">
-    <a class="underlineHover" routerLink="/signin">Sign In</a>
-    <a class="underlineHover" routerLink="/signup">Sign Up</a>
-    <br />
-    <br />
-    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-      <input
-        id="fullName"
-        formControlName="fullName"
-        placeholder="Full Name"
-        type="text"
-        required
-        [class.invalid-textbox]="
-          signUpForm.get('fullName')?.invalid && signUpForm.get('fullName')?.touched
-        "
-      />
-      <div *ngIf="signUpForm.get('fullName')?.invalid && signUpForm.get('fullName')?.touched">
-        <small class="validation-message">Full Name is required</small>
-      </div>
+<div class="wrapper"></div>
+<div id="formContent">
+  <a class="underlineHover" href="/signin">Sign In</a>
+  <a class="underlineHover" href="/signup">Sign Up</a>
+  <br>
+  <br>
+  <form (ngSubmit)="onSubmit()">
+    <input
+      id="fullName"
+      [(ngModel)]="fullName"
+      name="fullName"
+      [pattern]="emailRegex"
+      placeholder="Full Name"
+      type="text"
+      required
+    />
 
-      <input
-        id="email"
-        formControlName="email"
-        type="text"
-        placeholder="Email"
-        required
-        [class.invalid-textbox]="
-          signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched
-        "
-      />
-      <div *ngIf="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched">
-        <small *ngIf="signUpForm.get('email')?.errors?.['required']" class="validation-message">
-          Email is required
-        </small>
-        <small *ngIf="signUpForm.get('email')?.errors?.['pattern']" class="validation-message">
-          Invalid email format
-        </small>
-      </div>
+    <input
+      id="email"
+      [(ngModel)]="email"
+      name="email"
+      type="text"
+      placeholder="Email"
+      required
+    />
 
-      <input
-        id="password"
-        formControlName="password"
-        placeholder="Password"
-        type="password"
-        required
-        [class.invalid-textbox]="
-          signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched
-        "
-      />
-      <div *ngIf="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched">
-        <small *ngIf="signUpForm.get('password')?.errors?.['required']" class="validation-message">
-          Password is required
-        </small>
-        <small *ngIf="signUpForm.get('password')?.errors?.['minlength']" class="validation-message">
-          Password must be at least 6 characters long
-        </small>
-      </div>
+    <input
+      id="password"
+      [(ngModel)]="password"
+      name="password"
+      placeholder="Password"
+      type="password"
+      required
+    />
 
-      <br />
-      <button type="submit" [disabled]="signUpForm.invalid">Sign Up</button>
+    <br>
+    <button type="submit">Sign Up</button>
 
-      <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
-      <div *ngIf="errorMessage" class="alert">{{ errorMessage }}</div>
-    </form>
-  </div>
+    <div *ngIf="successMessage" class="success">
+      {{ successMessage }}
+    </div>
+
+    <div class="alert" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </form>
 </div>

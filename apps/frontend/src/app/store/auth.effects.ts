@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
+// import { AuthService } from '../services/auth.service';
 import * as AuthActions from './auth.actions';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -18,11 +19,7 @@ export class AuthEffects {
             AuthActions.signUpSuccess({ message: response.message })
           ),
           catchError((error) =>
-            of(
-              AuthActions.signUpFailure({
-                error: error.error.message || 'Sign up failed',
-              })
-            )
+            of(AuthActions.signUpFailure({ error: error.message }))
           )
         )
       )
@@ -36,17 +33,13 @@ export class AuthEffects {
         this.authService.signIn(signInData).pipe(
           map((response) =>
             AuthActions.signInSuccess({
-              message: response.message, // string
-              token: response.data.accessToken, // string
+              message: response.message,
+              token: response.data.accessToken,
               user: response.data.user,
             })
           ),
           catchError((error) =>
-            of(
-              AuthActions.signInFailure({
-                error: error.error.message || 'Sign in failed',
-              })
-            )
+            of(AuthActions.signInFailure({ error: error.message }))
           )
         )
       )
