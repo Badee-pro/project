@@ -4,6 +4,10 @@ import { Observable } from 'rxjs';
 import { environment } from '../../frontend/src/environments/environment';
 import { User } from './user.model';
 
+interface JwtPayload {
+  exp: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -49,11 +53,11 @@ export class UserService {
     localStorage.removeItem('token');
   }
 
-  getUserPayload(): unknown {
+  getUserPayload(): JwtPayload | null {
     const token = this.getToken();
     if (token) {
       const userPayload = atob(token.split('.')[1]);
-      return JSON.parse(userPayload);
+      return JSON.parse(userPayload) as JwtPayload;
     }
     return null;
   }
