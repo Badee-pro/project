@@ -11,7 +11,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // Enable CORS for the application (Frontend)
   app.enableCors({
-    origin: 'http://localhost:4200',
+    origin: 'https://storage.googleapis.com/badee-project-frontend',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
@@ -21,7 +21,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   // Set the global prefix for all routes
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 8080;
   await app.listen(port);
 
   // Log the application startup

@@ -41,7 +41,7 @@ export class SignInComponent {
       .subscribe(
         (response: any) => {
           localStorage.setItem('token', response.accessToken);
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/badee-project-frontend/profile/index.html']);
         },
         // Handle error response
         (error) => {

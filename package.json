@@ -2,7 +2,9 @@
   "name": "@fullstack-app/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build:backend": "nx build backend"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~18.2.0",
@@ -59,7 +61,7 @@
     "@nx/jest": "19.8.1",
     "@nx/js": "19.8.1",
     "@nx/nest": "19.8.1",
-    "@nx/node": "19.8.1",
+    "@nx/node": "^19.8.1",
     "@nx/web": "19.8.1",
     "@nx/webpack": "19.8.1",
     "@nx/workspace": "19.8.1",

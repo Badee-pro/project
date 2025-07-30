@@ -5,13 +5,26 @@
   "projectType": "application",
   "tags": [],
   "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/backend",
+        "main": "apps/backend/src/main.ts",
+        "tsConfig": "apps/backend/tsconfig.build.json"
+      },
+      "configurations": {
+        "production": {
+          "optimization": true
+        }
+      }
+    },
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
-        "buildTarget": "backend:build",
-        "runBuildTargetDependencies": false
+        "buildTarget": "backend:build"
       },
       "configurations": {
         "development": {

@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:3000/api',
+  apiBaseUrl: 'https://backend-151953728574.us-central1.run.app/api',
 };
