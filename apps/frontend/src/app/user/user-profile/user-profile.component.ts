@@ -28,7 +28,7 @@ export class UserProfileComponent implements OnInit {
   loadUserProfile() {
     const token = localStorage.getItem('token');
     if (!token) {
-      this.router.navigate(['/signin']);
+      this.router.navigate(['/badee-project-frontend/signin/index.html']);
       return;
     }
 
@@ -52,7 +52,7 @@ export class UserProfileComponent implements OnInit {
           this.errorMessage = 'Error loading profile';
           console.error('Error loading profile', error);
           if (error.status === 401) {
-            this.router.navigate(['/signin']);
+            this.router.navigate(['/badee-project-frontend/signin/index.html']);
           }
         }
       );
@@ -61,6 +61,6 @@ export class UserProfileComponent implements OnInit {
   // Method to handle user logout
   logout(): void {
     localStorage.removeItem('token');
-    this.router.navigate(['/signin']);
+    this.router.navigate(['/badee-project-frontend/signin/index.html']);
   }
 }

@@ -1,15 +1,18 @@
 <div class="wrapper"></div>
 <div id="formContent">
-    <a class="underlineHover" href="/badee-project-frontend/signin/index.html">Sign In</a>
-    <a class="underlineHover" href="/badee-project-frontend/signup/index.html">Sign Up</a>
-  <br>
-  <br>
-  <form (ngSubmit)="onSubmit()">
+  <a class="underlineHover" href="/badee-project-frontend/signin/index.html"
+    >Sign In</a
+  >
+  <a class="underlineHover" href="/badee-project-frontend/signup/index.html"
+    >Sign Up</a
+  >
+  <br />
+  <br />
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
     <input
       id="fullName"
-      [(ngModel)]="fullName"
       name="fullName"
-      [pattern]="emailRegex"
+      [(ngModel)]="fullName"
       placeholder="Full Name"
       type="text"
       required
@@ -17,24 +20,24 @@
 
     <input
       id="email"
-      [(ngModel)]="email"
       name="email"
-      type="text"
+      [(ngModel)]="email"
       placeholder="Email"
+      type="email"
       required
     />
 
     <input
       id="password"
-      [(ngModel)]="password"
       name="password"
+      [(ngModel)]="password"
       placeholder="Password"
       type="password"
       required
     />
 
-    <br>
-    <button type="submit">Sign Up</button>
+    <br />
+    <button type="submit" [disabled]="form.invalid">Sign Up</button>
 
     <div *ngIf="successMessage" class="success">
       {{ successMessage }}

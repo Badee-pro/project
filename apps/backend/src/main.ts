@@ -11,7 +11,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // Enable CORS for the application (Frontend)
   app.enableCors({
-    origin: 'https://storage.googleapis.com/badee-project-frontend',
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
