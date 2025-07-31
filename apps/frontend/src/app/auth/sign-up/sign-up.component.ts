@@ -45,12 +45,7 @@ export class SignUpComponent {
         () => {
           this.successMessage = 'Saved successfully';
           this.errorMessage = '';
-          setTimeout(
-            () =>
-              (window.location.href =
-                'https://storage.googleapis.com/badee-project-frontend/signin/index.html'),
-            1000
-          );
+          setTimeout(() => this.router.navigate(['/signin']), 1000);
         },
         // Handle error response
         (error) => {

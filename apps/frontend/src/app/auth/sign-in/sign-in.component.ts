@@ -41,9 +41,7 @@ export class SignInComponent {
       .subscribe(
         (response: any) => {
           localStorage.setItem('token', response.accessToken);
-          window.location.href =
-            'https://storage.googleapis.com/badee-project-frontend/profile/index.html';
-
+          this.router.navigate(['/profile']);
         },
         // Handle error response
         (error) => {
