@@ -1,10 +1,14 @@
 <div class="wrapper"></div>
 <div id="formContent">
-  <a class="underlineHover" href="/signin">Sign In</a>
-  <a class="underlineHover" href="/signup">Sign Up</a>
-  <br>
-  <br>
-  <form (ngSubmit)="onSubmit()">
+  <a class="underlineHover" href="/badee-project-frontend/signin/index.html"
+    >Sign In</a
+  >
+  <a class="underlineHover" href="/badee-project-frontend/signup/index.html"
+    >Sign Up</a
+  >
+  <br />
+  <br />
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
     <input
       id="fullName"
       [(ngModel)]="fullName"
