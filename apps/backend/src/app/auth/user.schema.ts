@@ -8,10 +8,13 @@ export interface UserDocument extends Document {
   email: string;
   password: string;
   loginAttempts: number;
+  resetToken?: string;
+  resetTokenExpire?: number;
 
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
+// Define User schema
 @Schema()
 export class User {
   @Prop({ required: true })
@@ -25,6 +28,17 @@ export class User {
 
   @Prop({ default: 0 })
   loginAttempts: number;
+  @Prop()
+  resetPasswordToken?: string;
+
+  @Prop()
+  resetPasswordExpires?: Date;
+
+  @Prop()
+  resetToken?: string;
+
+  @Prop()
+  resetTokenExpire?: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

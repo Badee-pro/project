@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-sign-up',
   standalone: true,

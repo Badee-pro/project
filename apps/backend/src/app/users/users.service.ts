@@ -7,8 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../auth/user.schema';
 import { SignUpDto } from '../auth/dto/sign-up.dto';
-// import { User, UserDocument } from './user.schema';
-// import { SignUpDto } from './dto/sign-up.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -37,7 +36,6 @@ export class UsersService {
       throw new BadRequestException('User already exists');
     }
 
-    // Create user instance — password will be hashed automatically in pre-save hook
     const newUser = new this.userModel({
       fullName,
       email: email.toLowerCase(),
@@ -58,6 +56,40 @@ export class UsersService {
   async resetLoginAttempts(email: string): Promise<void> {
     await this.userModel
       .updateOne({ email: email.toLowerCase() }, { $set: { loginAttempts: 0 } })
+      .exec();
+  }
+
+  // Update user details
+  async updateUser(userId: string, updateData: Partial<User>): Promise<User> {
+    if (updateData.password) {
+      const saltRounds = 10;
+      updateData.password = await bcrypt.hash(updateData.password, saltRounds);
+    }
+    return this.userModel
+      .findByIdAndUpdate(userId, updateData, { new: true })
+      .exec();
+  }
+
+  // Update password for user
+  async updatePassword(
+    userId: string,
+    newPassword: string
+  ): Promise<UserDocument> {
+    const user = await this.userModel.findById(userId);
+    if (!user) throw new NotFoundException('User not found');
+
+    // Set new password
+    user.password = newPassword;
+
+    return await user.save();
+  }
+
+  async findByResetToken(token: string): Promise<UserDocument | null> {
+    return this.userModel
+      .findOne({
+        resetToken: token,
+        resetTokenExpire: { $gt: Date.now() }, // ensure it's not expired
+      })
       .exec();
   }
 }

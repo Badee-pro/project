@@ -8,19 +8,22 @@ import { PassportModule } from '@nestjs/passport';
 import { UsersModule } from '../users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './jwt.strategy';
-
+import { ProductsModule } from '../product/products.module';
+import { MailerModule } from '@nestjs-modules/mailer';
 @Module({
   imports: [
     UsersModule,
     PassportModule,
+    ProductsModule,
+    MailerModule,
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: () => ({
         secret: process.env.JWT_SECRET,
-        // Set the JWT expiration time from environment variable or default to 8 hours
-        signOptions: { expiresIn: process.env.JWT_EXPIRATION || '1m' },
+        // Set the JWT expiration time to 8 hours
+        signOptions: { expiresIn: process.env.JWT_EXPIRATION || '8h' },
       }),
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),

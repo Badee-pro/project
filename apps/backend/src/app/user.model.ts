@@ -20,7 +20,7 @@ export class User extends Document {
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-// Pre-save hook to hash the password and ensure email is lowercase
+// Pre-save to hash the password and ensure email is lowercase
 UserSchema.pre('save', async function (next) {
   const user = this as User;
 
